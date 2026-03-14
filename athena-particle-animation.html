@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Athena Particle Animation</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+        }
+        .canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .text {
+            color: white;
+            font-size: 80px;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 2s;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" class="canvas"></canvas>
+    <div id="text" class="text">Hello Athena 🍓</div>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Particle class
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 4 + 1;
+                this.speedX = (Math.random() - 0.5) * 8;
+                this.speedY = (Math.random() - 0.5) * 8;
+                this.color = 'hsl(' + Math.random() * 360 + ', 100%, 50%);';
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.size *= 0.98;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function createParticles(e) {
+            const xPos = e.x;
+            const yPos = e.y;
+            for (let i = 0; i < 100; i++) {
+                particles.push(new Particle(xPos, yPos));
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((particle, index) => {
+                particle.update();
+                particle.draw();
+                if (particle.size <= 0.5) {
+                    particles.splice(index, 1);
+                }
+            });
+            requestAnimationFrame(animate);
+        }
+
+        canvas.addEventListener('click', createParticles);
+        animate();
+
+        // Display text with animation
+        function displayText() {
+            const textElement = document.getElementById('text');
+            textElement.style.opacity = 1;
+
+            setTimeout(() => {
+                textElement.style.opacity = 0;
+            }, 3000);
+        }
+
+        // Final fireworks burst for strawberry pattern
+        function createStrawberryPattern() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Draw strawberry pattern
+            ctx.fillStyle = '#FF4D4D';
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2, canvas.height / 2 - 50);
+            ctx.bezierCurveTo(canvas.width / 2 + 40, canvas.height / 2 - 90, canvas.width / 2 + 90, canvas.height / 2 + 30, canvas.width / 2, canvas.height / 2 + 50);
+            ctx.bezierCurveTo(canvas.width / 2 - 90, canvas.height / 2 + 30, canvas.width / 2 - 40, canvas.height / 2 - 90, canvas.width / 2, canvas.height / 2 - 50);
+            ctx.fill();
+            // Display Athena image
+            const img = new Image();
+            img.src = 'path_to_athena_image.png';
+            img.onload = () => {
+                ctx.drawImage(img, canvas.width / 2 - 50, canvas.height / 2 - 50, 100, 100);
+            };
+        }
+
+        setTimeout(() => {
+            createStrawberryPattern();
+        }, 6000);
+
+        displayText();
+    </script>
+</body>
+</html>
