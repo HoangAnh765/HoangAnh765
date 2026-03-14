@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quét Mã QR - Hiệu Ứng Pháo Bông</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="fireworks"></canvas>
+    
+    <div class="container">
+        <div class="scanner-box">
+            <h1>📱 Quét Mã QR</h1>
+            <video id="video" playsinline></video>
+            <div id="result-container" class="hidden">
+                <div id="result-content">
+                    <img id="result-image" src="" alt="Ảnh từ mã QR">
+                    <p id="result-text"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsqr/1.4.0/jsQR.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
