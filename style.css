@@ -1,0 +1,35 @@
+.qr-code-scanner {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border: 1px solid #ccc;
+  overflow: hidden;
+}
+
+.fireworks {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.fireworks.active {
+  opacity: 1;
+}
+
+@keyframes explode {
+  0% { transform: scale(0); opacity: 1; }
+  50% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+.firework {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 215, 0, 0.75);
+  animation: explode 1s ease-out forwards;
+}
